@@ -1,7 +1,15 @@
-import { ADD_TO_CART, REMOVE_FROM_CART } from "../../actionTypes/actionTypes";
+import {
+  ADD_PRODUCT,
+  ADD_TO_CART,
+  LOAD_PRODUCT,
+  PRODUCT_LOADED,
+  REMOVE_FROM_CART,
+  REMOVE_PRODUCT,
+} from "../../actionTypes/actionTypes";
 
 const initialstate = {
   cart: [],
+  products: []
 };
 
 const ProductReducer = (state = initialstate, action) => {
@@ -42,6 +50,28 @@ const ProductReducer = (state = initialstate, action) => {
         cart: state.cart.filter(
           (product) => product._id !== action.payload._id
         ),
+      };
+    case ADD_PRODUCT:
+      return {
+        ...state,
+        products: [...state.products, action.payload],
+      };
+    case REMOVE_PRODUCT:
+      return {
+        ...state,
+        products: state.products.filter(
+          (product) => product._id !== action.payload
+        ),
+      };
+    case LOAD_PRODUCT:
+      return {
+        ...state,
+        products: action.payload,
+      };
+    case PRODUCT_LOADED:
+      return {
+        ...state,
+        products: action.payload,
       };
     default:
       return state;
